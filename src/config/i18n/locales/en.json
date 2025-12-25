@@ -1,0 +1,38 @@
+{
+  "common": {
+    "verify": "Verify",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "submit": "Submit",
+    "close": "Close"
+  },
+  "welcome": "Welcome",
+  "hello": "Hello, {name}!",
+  "app": {
+    "title": "ERP Frontend",
+    "description": "Enterprise Resource Planning System"
+  },
+  "template": {
+    "favorites": "Favorites",
+    "personal_info": "Personal Info",
+    "log_out": "Log Out",
+    "customer_service": "Customer Service",
+    "pin_unpin_form": "Pin/Unpin Form",
+    "clear_cache": "Clear Cache",
+    "search_menu": "Search Menu",
+    "add_to_favorite_menus": "Add to Favorite Menus",
+    "remove_from_favorite_menus": "Remove from Favorite Menus",
+    "show_message_history": "Show Message History",
+    "close_all_tab": "Close All Tabs",
+    "show_manual": "Show Manual",
+    "show_dictionary": "Show Dictionary",
+    "refresh": "Refresh",
+    "customize_theme": "Customize Theme",
+    "update_favorite_menu_successful": "Favorite menu updated successfully",
+    "update_favorite_menu_failed": "Failed to update favorite menu"
+  }
+}
+

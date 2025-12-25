@@ -1,0 +1,38 @@
+{
+  "common": {
+    "verify": "Xác minh",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "search": "Tìm kiếm",
+    "submit": "Gửi",
+    "close": "Đóng"
+  },
+  "welcome": "Chào mừng",
+  "hello": "Xin chào, {name}!",
+  "app": {
+    "title": "ERP Frontend",
+    "description": "Hệ thống Quản lý Tài nguyên Doanh nghiệp"
+  },
+  "template": {
+    "favorites": "Yêu thích",
+    "personal_info": "Thông tin cá nhân",
+    "log_out": "Đăng xuất",
+    "customer_service": "Dịch vụ khách hàng",
+    "pin_unpin_form": "Ghim/Bỏ ghim biểu mẫu",
+    "clear_cache": "Xóa bộ nhớ đệm",
+    "search_menu": "Tìm kiếm menu",
+    "add_to_favorite_menus": "Thêm vào menu yêu thích",
+    "remove_from_favorite_menus": "Xóa khỏi menu yêu thích",
+    "show_message_history": "Hiển thị lịch sử tin nhắn",
+    "close_all_tab": "Đóng tất cả tab",
+    "show_manual": "Hiển thị hướng dẫn",
+    "show_dictionary": "Hiển thị từ điển",
+    "refresh": "Làm mới",
+    "customize_theme": "Tùy chỉnh giao diện",
+    "update_favorite_menu_successful": "Cập nhật menu yêu thích thành công",
+    "update_favorite_menu_failed": "Cập nhật menu yêu thích thất bại"
+  }
+}
+
