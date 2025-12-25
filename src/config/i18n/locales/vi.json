@@ -18,6 +18,7 @@
   "template": {
     "favorites": "Yêu thích",
     "personal_info": "Thông tin cá nhân",
+    "settings": "Cài đặt",
     "log_out": "Đăng xuất",
     "customer_service": "Dịch vụ khách hàng",
     "pin_unpin_form": "Ghim/Bỏ ghim biểu mẫu",
@@ -33,6 +34,25 @@
     "customize_theme": "Tùy chỉnh giao diện",
     "update_favorite_menu_successful": "Cập nhật menu yêu thích thành công",
     "update_favorite_menu_failed": "Cập nhật menu yêu thích thất bại"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "language": {
+      "title": "Ngôn ngữ",
+      "description": "Chọn ngôn ngữ ưa thích của bạn"
+    },
+    "dateFormat": {
+      "title": "Định dạng ngày",
+      "description": "Chọn cách hiển thị ngày tháng"
+    },
+    "darkMode": {
+      "title": "Chế độ tối",
+      "description": "Chuyển đổi giữa giao diện sáng và tối"
+    },
+    "primaryColor": {
+      "title": "Màu chủ đạo",
+      "description": "Chọn màu chủ đạo cho giao diện"
+    }
   }
 }
 

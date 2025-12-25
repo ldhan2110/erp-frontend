@@ -9,7 +9,7 @@ const DESKTOP_BREAKPOINT = 1024;
 export function useSidebar() {
   // Sidebar state
   const sidebarOpen = ref(false);
-  const sidebarCollapsed = ref(false);
+  const sidebarCollapsed = ref(true);
   const isDesktop = ref(false);
 
   /**
@@ -62,7 +62,7 @@ export function useSidebar() {
     isDesktop.value = window.innerWidth >= DESKTOP_BREAKPOINT;
     if (isDesktop.value) {
       sidebarOpen.value = true;
-      sidebarCollapsed.value = false;
+      sidebarCollapsed.value = true;
     } else {
       sidebarCollapsed.value = false; // On mobile, sidebar should be expanded when open
     }

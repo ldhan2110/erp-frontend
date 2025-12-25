@@ -18,6 +18,7 @@
   "template": {
     "favorites": "Favorites",
     "personal_info": "Personal Info",
+    "settings": "Settings",
     "log_out": "Log Out",
     "customer_service": "Customer Service",
     "pin_unpin_form": "Pin/Unpin Form",
@@ -33,6 +34,25 @@
     "customize_theme": "Customize Theme",
     "update_favorite_menu_successful": "Favorite menu updated successfully",
     "update_favorite_menu_failed": "Failed to update favorite menu"
+  },
+  "settings": {
+    "title": "Setting",
+    "language": {
+      "title": "Language",
+      "description": "Select your preferred language"
+    },
+    "dateFormat": {
+      "title": "Date Format",
+      "description": "Choose how dates are displayed"
+    },
+    "darkMode": {
+      "title": "Dark Mode",
+      "description": "Toggle between light and dark theme"
+    },
+    "primaryColor": {
+      "title": "Primary Color",
+      "description": "Choose your primary theme color"
+    }
   }
 }
 

@@ -241,6 +241,7 @@ const handleItemClick = (item) => {
   width: 16rem;
   background: var(--p-surface-0);
   border-right: 1px solid var(--p-surface-border);
+  border-top: none;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   transform: translateX(-100%);
   transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -425,6 +426,8 @@ const handleItemClick = (item) => {
     height: calc(100vh - 4rem);
     top: 4rem;
     z-index: 30;
+    border-top: none;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   }
   
   .app-sidebar-open {
@@ -433,6 +436,14 @@ const handleItemClick = (item) => {
   
   .app-sidebar-content {
     padding-top: 0;
+  }
+}
+
+/* Match header height on larger screens (header is 4.5rem above 1024px) */
+@media (min-width: 1025px) {
+  .app-sidebar {
+    height: calc(100vh - 4.5rem);
+    top: 4.5rem;
   }
 }
 

@@ -1,13 +1,19 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useSidebar } from './composables';
+  import { useSidebar, useSettings } from './composables';
   import AppHeader from './components/common/header/AppHeader.vue';
   import AppSidebar from './components/common/sidebar/AppSidebar.vue';
   
   const { t } = useI18n();
   const options = ref(['One-Way', 'Return']);
   const value = ref('One-Way');
+  
+  // Initialize settings
+  const { initializeSettings } = useSettings();
+  onMounted(() => {
+    initializeSettings();
+  });
   
   // Sidebar management - all logic extracted to composable
   const {
@@ -81,9 +87,8 @@
 .app-main {
   flex: 1;
   transition: margin-left 0.3s ease-in-out;
-  min-height: calc(100vh - 4rem);
   width: 100%;
-  margin-top: 4rem;
+  padding: 15px;
 }
 
 .app-main-content {

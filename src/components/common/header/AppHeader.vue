@@ -1,13 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
 import Button from 'primevue/button';
-import Menu from 'primevue/menu';
+import UserMenu from './items/UserMenu.vue';
+import HeaderSearch from './items/HeaderSearch.vue';
+import HeaderLogo from './items/HeaderLogo.vue';
 
 const props = defineProps({
   sidebarOpen: {
     type: Boolean,
-    default: false
+    default: false,
   },
   sidebarCollapsed: {
     type: Boolean,
@@ -21,68 +21,6 @@ const props = defineProps({
 
 const emit = defineEmits(['toggle-sidebar', 'toggle-collapse']);
 
-const { t, locale } = useI18n();
-
-const languages = [
-  { label: 'English', value: 'en', flag: '🇺🇸' },
-  { label: 'Tiếng Việt', value: 'vi', flag: '🇻🇳' }
-];
-
-const currentLanguage = computed(() => {
-  return languages.find(lang => lang.value === locale.value) || languages[0];
-});
-
-const changeLanguage = (lang) => {
-  locale.value = lang.value;
-};
-
-const userMenu = ref();
-const userMenuItems = computed(() => [
-  {
-    label: t('template.personal_info'),
-    icon: 'pi pi-user',
-    command: () => {
-      // Handle personal info
-      console.log('Personal Info');
-    }
-  },
-  {
-    label: t('template.favorites'),
-    icon: 'pi pi-star',
-    command: () => {
-      // Handle favorites
-      console.log('Favorites');
-    }
-  },
-  {
-    separator: true
-  },
-  {
-    label: t('template.log_out'),
-    icon: 'pi pi-sign-out',
-    command: () => {
-      // Handle logout
-      console.log('Logout');
-    }
-  }
-]);
-
-const languageMenu = ref();
-const languageMenuItems = computed(() => 
-  languages.map(lang => ({
-    label: `${lang.flag} ${lang.label}`,
-    command: () => changeLanguage(lang)
-  }))
-);
-
-const toggleLanguageMenu = (event) => {
-  languageMenu.value.toggle(event);
-};
-
-const toggleUserMenu = (event) => {
-  userMenu.value.toggle(event);
-};
-
 const toggleSidebar = () => {
   // On desktop, toggle collapse/expand when sidebar is open
   // On mobile, toggle open/close
@@ -95,7 +33,13 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-  <header class="p-header">
+  <header 
+    class="p-header"
+    :class="{
+      'sidebar-open': isDesktop && sidebarOpen,
+      'sidebar-collapsed': isDesktop && sidebarOpen && sidebarCollapsed
+    }"
+  >
     <div class="p-header-container">
       <div class="p-header-content">
         <!-- Logo and Title Section -->
@@ -114,59 +58,18 @@ const toggleSidebar = () => {
               ? (sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar')
               : (sidebarOpen ? 'Close Sidebar' : 'Open Sidebar')"
           />
-          <div class="p-header-logo">
-            <div class="p-header-logo-icon">
-              <i class="pi pi-building"></i>
-            </div>
-            <div class="p-header-title">
-              <h1 class="p-header-title-text">
-                {{ t('app.title') }}
-              </h1>
-              <p class="p-header-title-description">
-                {{ t('app.description') }}
-              </p>
-            </div>
-          </div>
+        </div>
+
+        <HeaderLogo />
+
+        <!-- Center Section: Search -->
+        <div class="p-header-center">
+          <HeaderSearch />
         </div>
 
         <!-- Right Section: Language Switcher and User Menu -->
         <div class="p-header-right">
-          <!-- Language Switcher -->
-          <Menu 
-            ref="languageMenu" 
-            :model="languageMenuItems" 
-            popup
-            class="p-language-menu"
-          />
-          <Button
-            type="button"
-            :label="currentLanguage.flag"
-            severity="secondary"
-            text
-            size="small"
-            @click="toggleLanguageMenu"
-            :title="currentLanguage.label"
-            class="p-language-button"
-          />
-
-          <!-- User Menu -->
-          <Menu 
-            ref="userMenu" 
-            :model="userMenuItems" 
-            popup
-            class="p-user-menu"
-          />
-          <Button
-            type="button"
-            icon="pi pi-user"
-            severity="secondary"
-            text
-            rounded
-            size="small"
-            @click="toggleUserMenu"
-            :title="t('template.personal_info')"
-            class="p-user-button"
-          />
+          <UserMenu />
         </div>
       </div>
     </div>
@@ -175,13 +78,44 @@ const toggleSidebar = () => {
 
 <style scoped>
 .p-header {
-  background: var(--p-surface-0);
+  background: linear-gradient(135deg, var(--p-surface-0) 0%, var(--p-surface-50) 100%);
   border-bottom: 1px solid var(--p-surface-border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 50;
   width: 100%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Box shadow at the bottom of header, not over sidebar */
+.p-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* On desktop, clip the shadow to exclude sidebar area when open */
+@media (min-width: 1024px) {
+  .p-header.sidebar-open:not(.sidebar-collapsed)::after {
+    clip-path: polygon(16rem 0, 100% 0, 100% 100%, 16rem 100%);
+  }
+  
+  .p-header.sidebar-collapsed::after {
+    clip-path: polygon(4rem 0, 100% 0, 100% 100%, 4rem 100%);
+  }
+  
+  .p-header:not(.sidebar-open)::after {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
 .p-header-container {
@@ -198,7 +132,7 @@ const toggleSidebar = () => {
 
 @media (min-width: 1024px) {
   .p-header-container {
-    padding: 0 2rem;
+    padding: 0 1rem;
   }
 }
 
@@ -206,81 +140,79 @@ const toggleSidebar = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
+  height: 4.5rem;
+  gap: 1rem;
 }
 
 .p-header-left {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.p-header-center {
   flex: 1;
-}
-
-.p-header-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.p-header-logo-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  background: var(--p-primary-color);
-  border-radius: var(--p-border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.p-header-logo-icon i {
-  color: var(--p-primary-color-text);
-  font-size: 1.25rem;
-}
-
-.p-header-title {
-  display: flex;
-  flex-direction: column;
-}
-
-.p-header-title-text {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--p-text-color);
-  line-height: 1.25;
-  margin: 0;
-}
-
-.p-header-title-description {
-  font-size: 0.75rem;
-  color: var(--p-text-muted-color);
-  line-height: 1.25;
-  margin: 0;
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .p-header-title-description {
-    display: block;
+@media (max-width: 768px) {
+  .p-header-center {
+    display: none;
   }
 }
 
 .p-header-right {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  flex: 0 0 auto;
 }
 
-.p-sidebar-toggle,
-.p-language-button,
-.p-user-button {
+.p-sidebar-toggle {
   color: var(--p-text-color-secondary);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-.p-sidebar-toggle:hover,
-.p-language-button:hover,
-.p-user-button:hover {
+.p-sidebar-toggle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--p-primary-color);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+.p-sidebar-toggle:hover::after {
+  opacity: 0.1;
+  transform: scale(1);
+}
+
+.p-sidebar-toggle:hover {
   background: var(--p-surface-hover);
-  color: var(--p-text-color);
+  color: var(--p-primary-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.p-sidebar-toggle:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .p-header-content {
+    height: 4rem;
+  }
 }
 </style>
