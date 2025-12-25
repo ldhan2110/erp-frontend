@@ -53,6 +53,21 @@
       "title": "Primary Color",
       "description": "Choose your primary theme color"
     }
+  },
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Sign in to your account to continue",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Sign In",
+    "submitting": "Signing in...",
+    "error": "Login failed",
+    "usernameRequired": "Username is required",
+    "passwordRequired": "Password is required",
+    "tagline": "Enterprise Resource Planning System",
+    "description": "Manage your business operations efficiently with our comprehensive ERP solution"
   }
 }
 

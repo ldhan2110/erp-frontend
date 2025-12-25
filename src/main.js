@@ -5,8 +5,12 @@ import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import App from './App.vue';
 import { i18n } from './config';
+import router from './router';
+import { pinia } from './store';
 
 const app = createApp(App);
+app.use(pinia);
+app.use(router);
 app.use(i18n);
 app.use(PrimeVue, {
     // Default theme configuration

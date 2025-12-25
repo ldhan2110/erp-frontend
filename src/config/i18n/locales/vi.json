@@ -53,6 +53,21 @@
       "title": "Màu chủ đạo",
       "description": "Chọn màu chủ đạo cho giao diện"
     }
+  },
+  "login": {
+    "title": "Chào mừng trở lại",
+    "subtitle": "Đăng nhập vào tài khoản của bạn để tiếp tục",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "rememberMe": "Ghi nhớ đăng nhập",
+    "forgotPassword": "Quên mật khẩu?",
+    "submit": "Đăng nhập",
+    "submitting": "Đang đăng nhập...",
+    "error": "Đăng nhập thất bại",
+    "usernameRequired": "Vui lòng nhập tên đăng nhập",
+    "passwordRequired": "Vui lòng nhập mật khẩu",
+    "tagline": "Hệ thống Quản lý Tài nguyên Doanh nghiệp",
+    "description": "Quản lý hoạt động kinh doanh hiệu quả với giải pháp ERP toàn diện của chúng tôi"
   }
 }
 
