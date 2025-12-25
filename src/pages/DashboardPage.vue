@@ -30,7 +30,7 @@
             <div class="bg-white rounded-lg shadow-sm p-6">
               <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <!-- Using i18n with t() function -->
-                <Button :label="t('common.verify')" />
+                <Button :label="t('common.verify')"  @click="showToast" />
                 <SelectButton v-model="value" :options="options" />
                 
                 <!-- Example of using i18n in template -->
@@ -53,8 +53,10 @@ import AppHeader from '@/components/common/header/AppHeader.vue';
 import AppSidebar from '@/components/common/sidebar/AppSidebar.vue';
 import Button from 'primevue/button';
 import SelectButton from 'primevue/selectbutton';
+import { useShowMessage } from '../composables/common/useShowMessage';
 
 const { t } = useI18n();
+const {showSuccess} = useShowMessage();
 const options = ref(['One-Way', 'Return']);
 const value = ref('One-Way');
 
@@ -63,6 +65,10 @@ const { initializeSettings } = useSettings();
 onMounted(() => {
   initializeSettings();
 });
+
+const showToast = () => {
+  showSuccess('Message sent successfully');
+};
 
 // Sidebar management - all logic extracted to composable
 const {

@@ -54,30 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         // Store user data from response.user object
-        const userData = response.data.data.user || {};
-        user.value = {
-          username: userData.USER_NAME || username,
-          userName: userData.USER_NAME,
-          thrAbempPk: userData.THR_ABEMP_PK,
-          orgNm: userData.ORG_NM,
-          roleNm: userData.ROLE_NM,
-          sysadminYn: userData.SYSADMIN_YN,
-          tcoCompanyPk: userData.TCO_COMPANY_PK,
-          tcoOrgPk: userData.TCO_ORG_PK,
-          hrLevel: userData.HR_LEVEL,
-          userLanguage: userData.USER_LANGUAGE,
-          empId: userData.EMP_ID,
-          announceYn: userData.ANNOUNCE_YN,
-          orgId: userData.ORG_ID,
-          pk: userData.PK,
-          prLevel: userData.PR_LEVEL,
-          salarySecurity: userData.SALARY_SECURITY,
-          logo: userData.LOGO,
-          // Store full user object for reference
-          _raw: userData
-        };
-
-        localStorage.setItem('auth_user', JSON.stringify(user.value));
+        await getUserInfo();
 
         return { success: true, message: response.data.message };
       } else {
@@ -106,6 +83,34 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');
     delete apiClient.defaults.headers.common['Authorization'];
+  };
+
+  const getUserInfo = async () => {
+    const response = await apiClient.get('/user/getuser');
+    const userData = response.data.user || {};
+    user.value = {
+      username: userData.USER_NAME || username,
+      userName: userData.USER_NAME,
+      thrAbempPk: userData.THR_ABEMP_PK,
+      orgNm: userData.ORG_NM,
+      roleNm: userData.ROLE_NM,
+      sysadminYn: userData.SYSADMIN_YN,
+      tcoCompanyPk: userData.TCO_COMPANY_PK,
+      tcoOrgPk: userData.TCO_ORG_PK,
+      hrLevel: userData.HR_LEVEL,
+      userLanguage: userData.USER_LANGUAGE,
+      empId: userData.EMP_ID,
+      announceYn: userData.ANNOUNCE_YN,
+      orgId: userData.ORG_ID,
+      pk: userData.PK,
+      prLevel: userData.PR_LEVEL,
+      salarySecurity: userData.SALARY_SECURITY,
+      logo: userData.LOGO,
+      // Store full user object for reference
+      _raw: userData
+    };
+
+    localStorage.setItem('auth_user', JSON.stringify(user.value));
   };
 
   const checkAuth = async () => {

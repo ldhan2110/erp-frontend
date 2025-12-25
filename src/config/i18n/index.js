@@ -10,6 +10,12 @@ const i18n = createI18n({
     en,
     vi,
   },
+  missing: (locale, key, vm, values) => {
+    // Return the key itself when translation is not found
+    return key;
+  },
+  silentTranslationWarn: true, // Suppress warnings for missing translations
+  silentFallbackWarn: true, // Suppress warnings for fallback translations
 });
 
 export default i18n;
