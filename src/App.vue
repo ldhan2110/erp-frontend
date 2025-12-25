@@ -1,64 +1,22 @@
 <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import AppHeader from './components/header/AppHeader.vue';
-  import AppSidebar from './components/sidebar/AppSidebar.vue';
+  import { useSidebar } from './composables';
+  import AppHeader from './components/common/header/AppHeader.vue';
+  import AppSidebar from './components/common/sidebar/AppSidebar.vue';
   
   const { t } = useI18n();
   const options = ref(['One-Way', 'Return']);
   const value = ref('One-Way');
   
-  // Sidebar open by default on desktop, closed on mobile
-  const sidebarOpen = ref(false);
-  const sidebarCollapsed = ref(false);
-  const isDesktop = ref(false);
-  
-  const checkScreenSize = () => {
-    const wasDesktop = isDesktop.value;
-    isDesktop.value = window.innerWidth >= 1024;
-    
-    // Only adjust sidebar state when crossing the breakpoint
-    if (wasDesktop !== isDesktop.value) {
-      if (isDesktop.value) {
-        // Switched to desktop - open sidebar, expanded
-        sidebarOpen.value = true;
-        sidebarCollapsed.value = false;
-      } else {
-        // Switched to mobile - close sidebar, but keep expanded state for when it opens
-        sidebarOpen.value = false;
-        sidebarCollapsed.value = false; // Keep expanded so when opened, it shows fully
-      }
-    }
-  };
-  
-  onMounted(() => {
-    isDesktop.value = window.innerWidth >= 1024;
-    if (isDesktop.value) {
-      sidebarOpen.value = true;
-      sidebarCollapsed.value = false;
-    } else {
-      sidebarCollapsed.value = false; // On mobile, sidebar should be expanded when open
-    }
-    window.addEventListener('resize', checkScreenSize);
-  });
-  
-  onUnmounted(() => {
-    window.removeEventListener('resize', checkScreenSize);
-  });
-  
-  const toggleSidebar = () => {
-    const wasOpen = sidebarOpen.value;
-    sidebarOpen.value = !sidebarOpen.value;
-    
-    // On mobile, when opening sidebar, always expand it fully
-    if (!isDesktop.value && sidebarOpen.value && !wasOpen) {
-      sidebarCollapsed.value = false;
-    }
-  };
-  
-  const toggleCollapse = () => {
-    sidebarCollapsed.value = !sidebarCollapsed.value;
-  };
+  // Sidebar management - all logic extracted to composable
+  const {
+    sidebarOpen,
+    sidebarCollapsed,
+    isDesktop,
+    toggleSidebar,
+    toggleCollapse,
+  } = useSidebar();
 </script>
 
 <template>
