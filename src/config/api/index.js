@@ -54,6 +54,7 @@ export const API_ENDPOINTS = {
     USER_INFO: '/user/getuser',
     LOGOUT: '/auth/logout',
   },
+  PROC: '/dso/callproc'
 };
 
 export default apiClient;

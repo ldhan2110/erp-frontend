@@ -1,15 +1,16 @@
 <script setup>
   import { onMounted } from 'vue';
   import { useSidebar, useSettings } from '@composables';
+  import { useAppStore } from '@store/common';
   import AppHeader from '@components/common/header/AppHeader.vue';
   import AppSidebar from '@components/common/sidebar/AppSidebar.vue';
   import AppTab from '@components/common/tabs/AppTab.vue';
+
+  // Initlize App Store
+  const { initializeApp } = useAppStore();
   
   // Initialize settings
   const { initializeSettings } = useSettings();
-  onMounted(() => {
-    initializeSettings();
-  });
   
   // Sidebar management - all logic extracted to composable
   const {
@@ -19,6 +20,12 @@
     toggleSidebar,
     toggleCollapse,
   } = useSidebar();
+
+  // Initialize App and Settings
+  onMounted(() => {
+    initializeApp();
+    initializeSettings();
+  });
 </script>
 
 <template>

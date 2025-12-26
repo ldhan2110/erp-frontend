@@ -1,10 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useLocale, useSettings } from '@composables';
+import { useAppStore } from '@store/common';
 import Dialog from 'primevue/dialog';
 import Select from 'primevue/select';
 import InputSwitch from 'primevue/inputswitch';
 import Button from 'primevue/button';
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   visible: {
@@ -17,23 +19,46 @@ const emit = defineEmits(['update:visible', 'close']);
 
 const { t, locale } = useLocale();
 const { settings, setLanguage, setDateFormat, setDarkMode, setPrimaryColor } = useSettings();
+const appStore = useAppStore();
+const { languages } = storeToRefs(appStore);
 
-// Language options
-const languages = [
-  { label: 'English', value: 'en', flag: '🇺🇸' },
-  { label: 'Tiếng Việt', value: 'vi', flag: '🇻🇳' }
-];
+// Map API language codes (ENG, VIE, KOR) to i18n locale codes (en, vi, ko)
+const mapLanguageCode = (code) => {
+  const mapping = {
+    'ENG': 'en',
+    'VIE': 'vi',
+    'KOR': 'ko'
+  };
+  return mapping[code] || code.toLowerCase().substring(0, 2);
+};
 
-const currentLanguage = computed(() => {
-  return languages.find(lang => lang.value === settings.value.language) || languages[0];
+// Convert API language data to Select component format
+const languageOptions = computed(() => {
+  debugger;
+  if (!Array.isArray(languages.value) || languages.value.length === 0) {
+    // Fallback to default languages if API data is not loaded yet
+    return [
+      { label: '🇺🇸 English', value: 'en', icon: null, originalCode: 'ENG' },
+      { label: '🇻🇳 Tiếng Việt', value: 'vi', icon: null, originalCode: 'VIE' }
+    ];
+  }
+  
+  return languages.value.map(lang => {
+    const localeCode = mapLanguageCode(lang.CODE);
+    const iconPath = lang.ICON || null;
+    return {
+      label: lang.NAME || lang.CODE,
+      value: localeCode,
+      icon: iconPath,
+      originalCode: lang.CODE,
+      originalData: lang
+    };
+  });
 });
 
-const languageOptions = computed(() => 
-  languages.map(lang => ({
-    label: `${lang.flag} ${lang.label}`,
-    value: lang.value
-  }))
-);
+const currentLanguage = computed(() => {
+  return languageOptions.value.find(lang => lang.value === settings.value.language) || languageOptions.value[0];
+});
 
 // Date format options
 const dateFormats = [
@@ -69,7 +94,9 @@ const colorOptionsList = computed(() => colorOptions);
 
 // Handlers
 const handleLanguageChange = (event) => {
-  setLanguage(event.value);
+  const langCode = event.value;
+  setLanguage(langCode);
+  appStore.saveLanguage(langCode);
 };
 
 const handleDateFormatChange = (event) => {
@@ -92,6 +119,24 @@ const handleClose = () => {
 const visibleModel = computed({
   get: () => props.visible,
   set: (value) => emit('update:visible', value)
+});
+
+// Load languages when modal opens
+watch(() => props.visible, (isVisible) => {
+  if (isVisible) {
+    const languages = appStore.languages;
+    if (!Array.isArray(languages) || languages.length === 0) {
+      appStore.getLanguages();
+    }
+  }
+});
+
+// Also try to load on mount
+onMounted(() => {
+  const languages = appStore.languages;
+  if (!Array.isArray(languages) || languages.length === 0) {
+    appStore.getLanguages();
+  }
 });
 </script>
 
@@ -134,7 +179,24 @@ const visibleModel = computed({
           >
             <template #value="slotProps">
               <div v-if="slotProps.value" class="p-setting-select-value">
+                <img 
+                  v-if="languageOptions.find(opt => opt.value === slotProps.value)?.icon"
+                  :src="languageOptions.find(opt => opt.value === slotProps.value)?.icon"
+                  :alt="languageOptions.find(opt => opt.value === slotProps.value)?.label"
+                  class="p-setting-language-icon"
+                />
                 {{ languageOptions.find(opt => opt.value === slotProps.value)?.label }}
+              </div>
+            </template>
+            <template #option="slotProps">
+              <div class="p-setting-language-option">
+                <img 
+                  v-if="slotProps.option.icon"
+                  :src="slotProps.option.icon"
+                  :alt="slotProps.option.label"
+                  class="p-setting-language-icon"
+                />
+                {{ slotProps.option.label }}
               </div>
             </template>
           </Select>
@@ -333,6 +395,19 @@ const visibleModel = computed({
 }
 
 .p-setting-color-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.p-setting-language-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.p-setting-language-option {
   display: flex;
   align-items: center;
   gap: 0.5rem;
