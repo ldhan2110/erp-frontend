@@ -88,11 +88,13 @@ export const useAppStore = defineStore('app', () => {
   }
 
   return {
+    menuList,
     language,
     languages,
     langMappingList,
     getLanguages,
     getLangMappingList,
+    getMenuList,
     saveLanguage,
     initializeApp
   }
