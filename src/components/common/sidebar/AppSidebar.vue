@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
-import { useTabsStore } from '@/store/common/tabs';
+import { storeToRefs } from 'pinia';
+import { useTabsStore, useAppStore } from '@/store/common';
 
 const props = defineProps({
   modelValue: {
@@ -15,7 +16,24 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
+const appStore = useAppStore();
 const tabsStore = useTabsStore();
+const { menuList } = storeToRefs(appStore);
+
+// Console log to see menuList value
+watch(menuList, (newVal, oldVal) => {
+  console.log('=== MenuList in AppSidebar ===');
+  console.log('Old value:', oldVal);
+  console.log('New value:', newVal);
+  console.log('MenuList length:', newVal?.length);
+  console.log('Full menuList object:', JSON.stringify(newVal, null, 2));
+}, { immediate: true, deep: true });
+
+// Also log initial value
+console.log('=== Initial MenuList in AppSidebar ===');
+console.log('Current menuList value:', menuList.value);
+console.log('MenuList type:', typeof menuList.value);
+console.log('Is array?', Array.isArray(menuList.value));
 
 const isOpen = computed({
   get: () => props.modelValue,

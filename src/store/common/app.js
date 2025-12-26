@@ -20,7 +20,6 @@ export const useAppStore = defineStore('app', () => {
 
 
   const getMenuList = async () => {
-    debugger;
     const response = await apiClient.post(API_ENDPOINTS.PROC, {
       proc: "SYS_SEL_USER_MENU",
       para: [user.value.PK],
