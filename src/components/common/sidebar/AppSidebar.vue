@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
+import { useTabsStore } from '@/store/common/tabs';
 
 const props = defineProps({
   modelValue: {
@@ -13,6 +14,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+const tabsStore = useTabsStore();
 
 const isOpen = computed({
   get: () => props.modelValue,
@@ -148,20 +151,27 @@ const isExpanded = (item) => {
   return expandedItems.value.has(item.label);
 };
 
+const isLeafItem = (item) => {
+  return !item.items || item.items.length === 0;
+};
+
 const handleItemClick = (item) => {
-  // If collapsed, don't expand submenus - just navigate
-  if (isCollapsed.value) {
-    // Handle navigation
-    console.log('Navigate to:', item.route);
-    // You can use Vue Router here: router.push(item.route)
+  // Check if item is a leaf (no submenu)
+  if (isLeafItem(item)) {
+    // Add tab for leaf items
+    tabsStore.addTab(item);
+    // Close sidebar on mobile after selecting
+    if (window.innerWidth < 1024) {
+      emit('update:modelValue', false);
+    }
   } else {
-    // Normal behavior when expanded
-    if (item.items && item.items.length > 0) {
+    // For items with submenus, toggle submenu expansion
+    if (isCollapsed.value) {
+      // If collapsed, expand submenu on click
       toggleSubmenu(item);
     } else {
-      // Handle navigation
-      console.log('Navigate to:', item.route);
-      // You can use Vue Router here: router.push(item.route)
+      // Normal behavior when expanded - toggle submenu
+      toggleSubmenu(item);
     }
   }
 };

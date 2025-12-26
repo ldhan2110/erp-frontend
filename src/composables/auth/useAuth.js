@@ -1,6 +1,6 @@
 import { computed, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@store/common/auth';
 
 export function useAuth() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@store/common/auth';
 
 export function setupRouterGuards(router) {
   router.beforeEach((to, from, next) => {
