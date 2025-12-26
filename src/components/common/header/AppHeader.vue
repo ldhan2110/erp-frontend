@@ -3,6 +3,9 @@ import Button from 'primevue/button';
 import UserMenu from './items/UserMenu.vue';
 import HeaderSearch from './items/HeaderSearch.vue';
 import HeaderLogo from './items/HeaderLogo.vue';
+import { useLocale } from '@/composables';
+
+const { t } = useLocale();
 
 const props = defineProps({
   sidebarOpen: {
@@ -29,6 +32,16 @@ const toggleSidebar = () => {
   } else {
     emit('toggle-sidebar');
   }
+};
+
+const handleManual = () => {
+  // TODO: Implement manual functionality
+  console.log('Manual clicked');
+};
+
+const handleDictionary = () => {
+  // TODO: Implement dictionary functionality
+  console.log('Dictionary clicked');
 };
 </script>
 
@@ -67,8 +80,28 @@ const toggleSidebar = () => {
           <HeaderSearch />
         </div>
 
-        <!-- Right Section: Language Switcher and User Menu -->
+        <!-- Right Section: Manual, Dictionary, and User Menu -->
         <div class="p-header-right">
+          <Button
+            v-tooltip.top="t('template.show_manual')"
+            type="button"
+            icon="pi pi-book"
+            severity="secondary"
+            size="small"
+            @click="handleManual"
+            class="p-user-button"
+            :title="t('template.show_manual')"
+          />
+          <Button
+            v-tooltip.top="t('template.show_dictionary')"
+            type="button"
+            icon="pi pi-bookmark"
+            severity="secondary"
+            size="small"
+            @click="handleDictionary"
+            class="p-user-button"
+            :title="t('template.show_dictionary')"
+          />
           <UserMenu />
         </div>
       </div>
@@ -206,6 +239,42 @@ const toggleSidebar = () => {
 }
 
 .p-sidebar-toggle:active {
+  transform: translateY(0);
+}
+
+.p-user-button {
+  color: var(--p-text-color-secondary);
+  transition: all 0.3s ease;
+  position: relative;
+  min-width: 2.5rem;
+  height: 2.5rem;
+}
+
+.p-user-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--p-primary-color);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+.p-user-button:hover::after {
+  opacity: 0.1;
+  transform: scale(1);
+}
+
+.p-user-button:hover {
+  background: var(--p-surface-hover);
+  color: var(--p-primary-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.p-user-button:active {
   transform: translateY(0);
 }
 
