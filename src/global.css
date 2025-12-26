@@ -11,3 +11,37 @@ body {
 * {
   font-family: inherit;
 }
+
+.required-asterisk {
+  color: red;
+  margin-left: 2px;
+}
+
+/* Required input styling - lighter primary color background */
+/* Direct targeting when class is on input element itself */
+input.required-input,
+.p-inputtext.required-input,
+.p-inputnumber-input.required-input {
+  background-color: color-mix(in srgb, var(--p-primary-color) 10%, white) !important;
+}
+
+input.required-input:focus,
+.p-inputtext.required-input:focus,
+.p-inputnumber-input.required-input:focus {
+  background-color: color-mix(in srgb, var(--p-primary-color) 15%, white) !important;
+  border-color: var(--p-primary-color) !important;
+}
+
+/* Fallback for when class is on wrapper */
+.required-input input,
+.required-input .p-inputtext,
+.required-input .p-inputnumber-input {
+  background-color: color-mix(in srgb, var(--p-primary-color) 10%, white) !important;
+}
+
+.required-input input:focus,
+.required-input .p-inputtext:focus,
+.required-input .p-inputnumber-input:focus {
+  background-color: color-mix(in srgb, var(--p-primary-color) 15%, white) !important;
+  border-color: var(--p-primary-color) !important;
+}

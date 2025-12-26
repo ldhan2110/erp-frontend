@@ -24,6 +24,6 @@ app.use(PrimeVue, {
             cssLayer: false
         }
     },
-    unstyled: false
+    size: 'small'
 });
 app.mount('#app');
