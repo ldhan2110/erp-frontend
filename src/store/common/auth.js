@@ -87,9 +87,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getUserInfo = async () => {
     const response = await apiClient.get(API_ENDPOINTS.AUTH.USER_INFO);
-    const userData = response.data.user || {};
+    const userData = response.data || {};
     user.value = {
-      username: userData.USER_NAME || username,
+      PK: userData.PK,
+      username: userData.USER_NAME,
       userName: userData.USER_NAME,
       thrAbempPk: userData.THR_ABEMP_PK,
       orgNm: userData.ORG_NM,
@@ -141,6 +142,7 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     logout,
     checkAuth,
+    getUserInfo,
     initAuth
   };
 });
