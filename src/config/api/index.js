@@ -50,10 +50,9 @@ apiClient.interceptors.response.use(
 // API Endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: '/auth/login',
+    LOGIN: '/user/login',
+    USER_INFO: '/user/getuser',
     LOGOUT: '/auth/logout',
-    VERIFY: '/auth/verify',
-    REFRESH: '/auth/refresh',
   },
 };
 

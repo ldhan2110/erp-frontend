@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { apiClient } from '@/config/api';
+import { apiClient, API_ENDPOINTS } from '@/config/api';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null;
 
     try {
-      const response = await apiClient.post('/user/login', {
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, {
         user_id: username,
         password
       });
@@ -86,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const getUserInfo = async () => {
-    const response = await apiClient.get('/user/getuser');
+    const response = await apiClient.get(API_ENDPOINTS.AUTH.USER_INFO);
     const userData = response.data.user || {};
     user.value = {
       username: userData.USER_NAME || username,
