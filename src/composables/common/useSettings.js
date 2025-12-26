@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from './useLocale';
 
 const STORAGE_KEY = 'app-settings';
 
@@ -57,7 +57,7 @@ let initialized = false;
  * Handles language, date format, dark mode, and primary color
  */
 export function useSettings() {
-  const { locale } = useI18n();
+  const { locale } = useLocale();
   
   // Use singleton settings state
   if (!globalSettings) {

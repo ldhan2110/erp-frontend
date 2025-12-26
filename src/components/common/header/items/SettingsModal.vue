@@ -1,11 +1,10 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { useLocale, useSettings } from '@composables';
 import Dialog from 'primevue/dialog';
 import Select from 'primevue/select';
 import InputSwitch from 'primevue/inputswitch';
 import Button from 'primevue/button';
-import { useSettings } from '@composables';
 
 const props = defineProps({
   visible: {
@@ -16,7 +15,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:visible', 'close']);
 
-const { t, locale } = useI18n();
+const { t, locale } = useLocale();
 const { settings, setLanguage, setDateFormat, setDarkMode, setPrimaryColor } = useSettings();
 
 // Language options

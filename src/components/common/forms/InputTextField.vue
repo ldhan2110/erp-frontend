@@ -1,5 +1,5 @@
 <script setup>
-    import { useI18n } from 'vue-i18n';
+    import { useLocale } from '@/composables';
     import { computed, defineEmits, defineProps } from 'vue';
 
     const props = defineProps({
@@ -17,7 +17,7 @@
         },
         placeholder: {
             type: String,
-            default: 'Enter Value'
+            required: false,
         },
         disabled: {
             type: Boolean,
@@ -33,7 +33,7 @@
         }
     });
 
-    const { t } = useI18n();
+    const { t } = useLocale();
     const emit = defineEmits(['update:modelValue'])
     const valueModel = computed({
         get: () => props.modelValue,

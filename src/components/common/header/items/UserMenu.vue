@@ -1,12 +1,11 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useAuth } from '@/composables';
+import { useLocale, useAuth } from '@/composables';
 import Button from 'primevue/button';
 import Menu from 'primevue/menu';
 import SettingsModal from './SettingsModal.vue';
 
-const { t } = useI18n();
+const { t } = useLocale();
 const { logout } = useAuth();
 
 const userMenu = ref();

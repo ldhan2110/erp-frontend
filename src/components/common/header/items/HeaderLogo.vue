@@ -1,7 +1,7 @@
 <script setup>
-import { useI18n } from 'vue-i18n';
+import { useLocale } from '@/composables';
 
-const { t } = useI18n();
+const { t } = useLocale();
 </script>
 
 <template>

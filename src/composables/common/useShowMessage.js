@@ -1,9 +1,9 @@
 import { useToast } from 'primevue/usetoast';
-import { useI18n } from 'vue-i18n';
+import { useLocale } from './useLocale';
 
 export function useShowMessage() {
   const toast = useToast();
-  const { t } = useI18n();
+  const { t } = useLocale();
 
   const showInfo = (message) => {
     toast.add({

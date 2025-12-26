@@ -123,15 +123,14 @@
 
 <script setup>
 import { reactive } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useAuth } from '@/composables';
+import { useLocale, useAuth } from '@/composables';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
 import Checkbox from 'primevue/checkbox';
 import Message from 'primevue/message';
 
-const { t } = useI18n();
+const { t } = useLocale();
 const { login, loading, error } = useAuth();
 
 const form = reactive({

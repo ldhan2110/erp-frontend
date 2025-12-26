@@ -33,8 +33,8 @@
                 <Button :label="t('common.verify')"  @click="showToast" />
                 <SelectButton v-model="value" :options="options" />
 
-                <InputTextField  required id="name" label="Name" v-model:modelValue="name" placeholder="Enter Name" maxlength="3" />
-                <InputNumberField required id="age" label="Age" v-model:modelValue="age" placeholder="Enter Age" maxlength="100" min="0" max="100" minFractionDigits="0" maxFractionDigits="0" prefix="$ " suffix=" USD" showClear="true" />
+                <InputTextField  required id="name" label="Name" v-model:modelValue="name" maxlength="3" />
+                <InputNumberField required id="age" label="Age" v-model:modelValue="age" maxlength="100" min="0" max="100" minFractionDigits="0" maxFractionDigits="0" prefix="$ " suffix=" USD" showClear="true" />
                 
                 <!-- Example of using i18n in template -->
                 <p>{{ t('welcome') }}</p>
@@ -50,8 +50,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useSidebar, useSettings } from '@/composables';
+import { useLocale, useSidebar, useSettings } from '@/composables';
 import Button from 'primevue/button';
 import SelectButton from 'primevue/selectbutton';
 import { useShowMessage } from '../composables/common/useShowMessage';
@@ -60,12 +59,12 @@ import InputNumberField from '@/components/common/forms/InputNumberField.vue';
 import AppHeader from '@/components/common/header/AppHeader.vue';
 import AppSidebar from '@/components/common/sidebar/AppSidebar.vue';
 
-const { t } = useI18n();
+const { t } = useLocale();
 const {showSuccess} = useShowMessage();
 const options = ref(['One-Way', 'Return']);
 const value = ref('One-Way');
-const name = ref('John Doe');
-const age = ref(25);
+const name = ref();
+const age = ref();
 
 // Initialize settings
 const { initializeSettings } = useSettings();

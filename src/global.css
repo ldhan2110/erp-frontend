@@ -45,3 +45,13 @@ input.required-input:focus,
   background-color: color-mix(in srgb, var(--p-primary-color) 15%, white) !important;
   border-color: var(--p-primary-color) !important;
 }
+
+.p-floatlabel-on label {
+  padding: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 50%,
+    color-mix(in srgb, var(--p-primary-color) 15%, white) 50%,
+  ) !important;
+  font-weight: 400 !important;
+}
