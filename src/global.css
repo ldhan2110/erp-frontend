@@ -40,6 +40,7 @@ input.required-input:focus,
 }
 
 .required-input input:focus,
+.p-floatlabel-on label:focus-within,
 .required-input .p-inputtext:focus,
 .required-input .p-inputnumber-input:focus {
   background-color: color-mix(in srgb, var(--p-primary-color) 15%, white) !important;
@@ -48,10 +49,9 @@ input.required-input:focus,
 
 .p-floatlabel-on label {
   padding: 0 !important;
-  background: linear-gradient(
-    to bottom,
-    #ffffff 50%,
-    color-mix(in srgb, var(--p-primary-color) 15%, white) 50%,
-  ) !important;
   font-weight: 400 !important;
+}
+
+.p-floatlabel:has(input:focus) label {
+  color: var(--p-primary-color) !important;
 }

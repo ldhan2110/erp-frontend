@@ -33,7 +33,7 @@
                 <Button :label="t('common.verify')"  @click="showToast" />
                 <SelectButton v-model="value" :options="options" />
 
-                <InputTextField  required id="name" label="Name" v-model:modelValue="name" maxlength="3" />
+                <InputTextField id="name" label="Name" v-model:modelValue="name" maxlength="3" />
                 <InputNumberField required id="age" label="Age" v-model:modelValue="age" maxlength="100" min="0" max="100" minFractionDigits="0" maxFractionDigits="0" prefix="$ " suffix=" USD" showClear="true" />
                 
                 <!-- Example of using i18n in template -->
