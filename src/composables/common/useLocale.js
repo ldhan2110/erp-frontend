@@ -6,7 +6,8 @@ const STORAGE_KEY = 'app-locale';
 // Available locales configuration
 export const AVAILABLE_LOCALES = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' }
 ];
 
 // Default locale

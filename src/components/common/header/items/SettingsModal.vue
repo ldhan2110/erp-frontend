@@ -34,12 +34,12 @@ const mapLanguageCode = (code) => {
 
 // Convert API language data to Select component format
 const languageOptions = computed(() => {
-  debugger;
   if (!Array.isArray(languages.value) || languages.value.length === 0) {
     // Fallback to default languages if API data is not loaded yet
     return [
       { label: '🇺🇸 English', value: 'en', icon: null, originalCode: 'ENG' },
-      { label: '🇻🇳 Tiếng Việt', value: 'vi', icon: null, originalCode: 'VIE' }
+      { label: '🇻🇳 Tiếng Việt', value: 'vi', icon: null, originalCode: 'VIE' },
+      { label: '🇰🇷 한국어', value: 'ko', icon: null, originalCode: 'KOR' }
     ];
   }
   
